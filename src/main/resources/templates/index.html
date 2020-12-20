@@ -1,65 +1,128 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CustomerApplication</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+	<link rel="stylesheet" href="../static/css/index.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+	<title>CustomerApplication</title>
 </head>
 <body>
 	<div class="form">
 		<ul class="tab-group">
-			<li class="tab active"><a href="#signup">Sign Up</a></li>
-			<li class="tab"><a href="#login">Log In</a></li>
+			<li class="tab active"><a href="#create">Criar Cliente</a></li>
+			<li class="tab"><a href="#update">Atualizar Cliente</a></li>
+			<li class="tab"><a href="#delete">Apagar Cliente</a></li>
+			<li class="tab"><a href="#get">Consultar Cliente</a></li>
 		</ul>
 		<div class="tab-content">
-			<div id="signup">
-				<h1>Sign Up for Free</h1>
-				<form action="/" method="post">
-					<div class="top-row">
-						<div class="field-wrap">
-							<label> First Name<span class="req">*</span>
-							</label> <input type="text" required autocomplete="off" />
-						</div>
+			<div id="create">
+				<h1>Crie uma nova conta</h1>
+				<div id="formCreate">
+					<div class="field-wrap">
+						<label>Nome<span class="req">*</span></label>
+						<input type="text" name="firstName" id="firstName" required autocomplete="off" />
+					</div>
 
-						<div class="field-wrap">
-							<label> Last Name<span class="req">*</span>
-							</label> <input type="text" required autocomplete="off" />
-						</div>
+					<div class="field-wrap">
+						<label>Sobrenome<span class="req">*</span></label>
+						<input type="text" name="lastName" id="lastName" required autocomplete="off" />
 					</div>
 					<div class="field-wrap">
-						<label> Email Address<span class="req">*</span>
-						</label> <input type="email" required autocomplete="off" />
+						<label>Endereço<span class="req"></span></label>
+						<input type="text" name="address" id="address" autocomplete="off" />
 					</div>
 					<div class="field-wrap">
-						<label> Set A Password<span class="req">*</span>
-						</label> <input type="password" required autocomplete="off" />
+						<label>Email<span class="req"></span></label>
+						<input type="email" name="email" id="email" autocomplete="off" />
 					</div>
-					<button type="submit" class="button button-block">
-						Get Started
-					</button>
-				</form>
+					<div class="field-wrap">
+						<label>CPF<span class="req">*</span></label>
+						<input type="text" name="cpf" id="cpf" required autocomplete="off" />
+					</div>
+					<div class="field-wrap">
+						<label>Sex<span class="req"></span></label>
+						<input type="text" name="sex" id="sex" autocomplete="off" />
+					</div>
+					<div class="field-wrap">
+						<label>Nacionalidade<span class="req"></span></label>
+						<input type="text" name="nationality" id="nationality" autocomplete="off" />
+					</div>
+					<div class="field-wrap">
+						<label>Naturalidade<span class="req"></span></label>
+						<input type="text" name="naturalness" id="naturalness" autocomplete="off" />
+					</div>
+					<div class="field-wrap date">
+						<label>Data de Aniversário<span class="req">*</span></label>
+						<input type="date" name="dateOfBirth" id="dateOfBirth" required autocomplete="off" />
+					</div>
+					<button onclick="submitCreateForm()" class="button button-block">Cadastrar</button>
+				</div>
 			</div>
-			<div id="login">
-				<h1>Welcome Back!</h1>
-				<form action="/" method="post">
+			<div id="update" style="display: none;">
+				<h1>Atualizar informações da conta</h1>
+				<div id="formUpdate">
 					<div class="field-wrap">
-						<label> Email Address<span class="req">*</span>
-						</label> <input type="email" required autocomplete="off" />
+						<label>Nome<span class="req"></span></label>
+						<input type="text" name="firstName" id="firstNameUpdate" autocomplete="off" />
 					</div>
 					<div class="field-wrap">
-						<label> Password<span class="req">*</span>
-						</label> <input type="password" required autocomplete="off" />
+						<label>Sobrenome<span class="req"></span></label>
+						<input type="text" name="lastName" id="lastNameUpdate" autocomplete="off" />
 					</div>
-					<p class="forgot">
-						<a href="#">Forgot Password?</a>
-					</p>
-					<button class="button button-block">
-						Log In
-					</button>
-				</form>
-
+					<div class="field-wrap">
+						<label>Endereço<span class="req"></span></label>
+						<input type="text" name="address" id="addressUpdate" autocomplete="off" />
+					</div>
+					<div class="field-wrap">
+						<label>Email<span class="req"></span></label>
+						<input type="email" name="email" id="emailUpdate" autocomplete="off" />
+					</div>
+					<div class="field-wrap">
+						<label>CPF<span class="req">*</span></label>
+						<input type="text" name="cpf" id="cpfUpdate" required autocomplete="off" />
+					</div>
+					<div class="field-wrap">
+						<label>Sex<span class="req"></span></label>
+						<input type="text" name="sex" id="sexUpdate" autocomplete="off" />
+					</div>
+					<div class="field-wrap">
+						<label>Nacionalidade<span class="req"></span></label>
+						<input type="text" name="nationality" id="nationalityUpdate" autocomplete="off" />
+					</div>
+					<div class="field-wrap">
+						<label>Naturalidade<span class="req"></span></label>
+						<input type="text" name="naturalness" id="naturalnessUpdate" autocomplete="off" />
+					</div>
+					<div class="field-wrap date">
+						<label>Data de Aniversário<span class="req"></span></label>
+						<input type="date" name="dateOfBirth" id="dateOfBirthUpdate" autocomplete="off" />
+					</div>
+					<button onclick="submitUpdateForm()" class="button button-block">Atualizar Cadastro</button>
+				</div>
 			</div>
-
+			<div id="delete" style="display: none;">
+				<h1>Delete o cadastro de um Cliente</h1>
+				<div>
+					<div class="field-wrap">
+						<label>CPF<span class="req">*</span></label>
+						<input type="text" class="cpf" required autocomplete="off" />
+					</div>
+					<button onclick="submitDeleteForm()" class="button button-block">Deletar</button>
+				</div>
+			</div>
+			<div id="get" style="display: none;">
+				<h1>Consulte um Cliente</h1>
+				<div>
+					<div class="field-wrap">
+						<label>CPF<span class="req">*</span></label>
+						<input type="text" class="cpf" required autocomplete="off" />
+					</div>
+					<button onclick="submitGetForm()" class="button button-block">Consultar</button>
+				</div>
+			</div>
 		</div>
-
 	</div>
+	<script src="../static/js/functions.js"></script>
 </body>
 </html>
