@@ -113,6 +113,14 @@ public class CustomerController {
 		}
 	}
 	
+	@PostMapping("/v2/customers")
+	public String createCustomerAPIV2(@RequestBody CustomerModel customer) {
+		if (customer.getAddress() == null || customer.getAddress() == "") {
+			return "Endereço é um tempo obrigatório";
+		}
+		return createCustomerAPI(customer);
+	}
+	
 	@GetMapping("")
 	public String getGithubLink(){
 		return "https://github.com/JoniMilczarek/CustomerApplication";	

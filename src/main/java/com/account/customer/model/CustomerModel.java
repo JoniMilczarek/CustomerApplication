@@ -23,6 +23,7 @@ public class CustomerModel implements Serializable{
 	private String email;
 	private String nationality;
 	private String naturalness;
+	private String address;
 	private Date dateOfBirth;
 	private Date createdDate;
 	private Date updatedDate;
@@ -105,6 +106,14 @@ public class CustomerModel implements Serializable{
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 }
