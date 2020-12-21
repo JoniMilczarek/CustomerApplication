@@ -2,6 +2,7 @@ package com.account.customer.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,22 +30,22 @@ public class CustomerController {
 	}
 	
 	@DeleteMapping("/v1/customers")
-	public String deleteCustomerAPI(@RequestBody CustomerModel customer) {
+	public ResponseEntity<?> deleteCustomerAPI(@RequestBody CustomerModel customer) {
 		return customerServices.deleteCustomer(customer);
 	}
 	
 	@PutMapping("/v1/customers")
-	public String updateCustomerAPI(@RequestBody CustomerModel customer) {
+	public ResponseEntity<?> updateCustomerAPI(@RequestBody CustomerModel customer) {
 		return customerServices.updateCustomer(customer);
 	}
 	
 	@PostMapping("/v1/customers")
-	public String createCustomerAPI(@RequestBody CustomerModel customer) {
+	public ResponseEntity<?> createCustomerAPI(@RequestBody CustomerModel customer) {
 		return customerServices.createCustomerV1(customer);
 	}
 	
 	@PostMapping("/v2/customers")
-	public String createCustomerAPIV2(@RequestBody CustomerModel customer) {
+	public ResponseEntity<?> createCustomerAPIV2(@RequestBody CustomerModel customer) {
 		return customerServices.createCustomerV2(customer);
 	}
 	

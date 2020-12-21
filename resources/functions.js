@@ -60,7 +60,14 @@ var submitGetForm = function() {
 		type: "GET",
 		headers: { "Authorization": "Basic " + btoa("jonatan" + ":" + "Teste123") }
 	}).done(function(response) {
-		alert(response);
+		if(response != undefined && response != "") {
+			resolveResponse(response);	
+			$("#alertModal").modal();
+		} else {
+			clearModal();
+			$("#infoModal .modal-body").html("Cliente não encontrado");
+			$("#infoModal").modal();		
+		}
 	});
 }
 
@@ -75,7 +82,6 @@ var submitCreateForm = function() {
 	customer.nationality = $("#nationality").val();
 	customer.email = $("#email").val();
 	
-	console.log("customer", customer);
 	$.ajax({
 		url : post_url,
 		type: "POST",
@@ -84,8 +90,13 @@ var submitCreateForm = function() {
 		context: "json",
 	    contentType: 'application/json',
 		headers: { "Authorization": "Basic " + btoa("jonatan" + ":" + "Teste123") }	    
-	}).done(function(response){ 
-		alert(response);
+	}).done(function(response){
+		$("#infoModal .modal-body").html(response);
+		$("#infoModal").modal();		
+	}).fail(function(response) {
+		console.log(response);
+		$("#infoModal .modal-body").html(response.responseText);
+		$("#infoModal").modal();	
 	});
 }
 
@@ -111,7 +122,11 @@ var submitUpdateForm = function() {
 	    contentType: 'application/json',
 		headers: { "Authorization": "Basic " + btoa("jonatan" + ":" + "Teste123") }	    
 	}).done(function(response){ 
-		alert(response);
+		$("#infoModal .modal-body").html(response);
+		$("#infoModal").modal();	
+	}).fail(function(response) {
+		$("#infoModal .modal-body").html(response.responseText);
+		$("#infoModal").modal();	
 	});
 }
 
@@ -129,6 +144,34 @@ var submitDeleteForm = function() {
 	    contentType: 'application/json',
 		headers: { "Authorization": "Basic " + btoa("jonatan" + ":" + "Teste123") }
 	}).done(function(response) {
-		alert(response);
-	});;
+		$("#infoModal .modal-body").html(response);
+		$("#infoModal").modal();
+	}).fail(function(response) {
+		$("#infoModal .modal-body").html(response.responseText);
+		$("#infoModal").modal();	
+	});
+}
+
+var resolveResponse = function(responseJson) {
+	$("#modalCpf").html(responseJson.cpf);
+	$("#modalNome").html(responseJson.firstName);
+	$("#modalSobrenome").html(responseJson.lastName);
+	$("#modalEmail").html(responseJson.email);
+	$("#modalEndereco").html(responseJson.address);
+	$("#modalSexo").html(responseJson.sex);
+	$("#modalAniversario").html(responseJson.dateOfBirth);
+	$("#modalNatural").html(responseJson.naturalness);
+	$("#modalNacional").html(responseJson.nationality);
+}
+
+var clearModal = function() {
+	$("#modalCpf").html();
+	$("#modalNome").html();
+	$("#modalSobrenome").html();
+	$("#modalEmail").html();
+	$("#modalEndereco").html();
+	$("#modalSexo").html();
+	$("#modalAniversario").html();
+	$("#modalNatural").html();
+	$("#modalNacional").html();
 }

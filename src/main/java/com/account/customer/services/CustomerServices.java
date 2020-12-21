@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.account.customer.model.CustomerModel;
@@ -18,42 +20,42 @@ public class CustomerServices {
 		return customerRepository.findByCpf(customerCpf);
 	}
 	
-	public String deleteCustomer(CustomerModel customer) {
+	public ResponseEntity<?> deleteCustomer(CustomerModel customer) {
 		String customerCpf = customer.getCpf();
 		Boolean registeredCustomer = customerRepository.findByCpf(customerCpf) != null ? true : false;
 		Boolean validCpf = validateCpf(customerCpf);
 		if (validCpf) {
 			if (registeredCustomer) {
 				customerRepository.delete(customer);
-				return "Cadastro de cliente excluido com sucesso";
+				return new ResponseEntity<>("Cadastro de cliente excluido com sucesso", HttpStatus.OK);
 			} else {
-				return "Cadastro de cliente não encontrado";
+				return new ResponseEntity<>("Cadastro de cliente não encontrado", HttpStatus.BAD_REQUEST);
 			}
 		} else {
-			return "CPF inválido";
+			return new ResponseEntity<>("CPF inválido", HttpStatus.BAD_REQUEST);
 		}
 	}
 	
-	public String createCustomerV1(CustomerModel customer) {
+	public ResponseEntity<?> createCustomerV1(CustomerModel customer) {
 		if (customer.getFirstName() == null || customer.getFirstName() == "") {
-			return "firstName é um campo obrigatório";
+			return new ResponseEntity<>("firstName é um campo obrigatório", HttpStatus.BAD_REQUEST);
 		}
 		
 		if (customer.getLastName() == null || customer.getLastName() == "") {
-			return "lastName é um campo obrigatório";
+			return new ResponseEntity<>("lastName é um campo obrigatório", HttpStatus.BAD_REQUEST);
 		}
 		
 		if (customer.getCpf() == null || customer.getCpf() == "") {
-			return "CPF é um campo obrigatório";
+			return new ResponseEntity<>("CPF é um campo obrigatório", HttpStatus.BAD_REQUEST);
 		}
 		
 		if (customer.getDateOfBirth() == null) {
-			return "DateOfBirth é um campo obrigatório";
+			return new ResponseEntity<>("DateOfBirth é um campo obrigatório", HttpStatus.BAD_REQUEST);
 		}
 		
 		if (customer.getEmail() != null && customer.getEmail() != "") {
 			if (!validateEmail(customer.getEmail())) {
-				return "Email inválido";
+				return new ResponseEntity<>("Email inválido", HttpStatus.BAD_REQUEST);
 			}
 		}
 		
@@ -66,25 +68,25 @@ public class CustomerServices {
 				customer.setUpdatedDate(date);
 				customer.setCreatedDate(date);
 				customerRepository.save(customer);
-				return customerRepository.save(customer) != null ? "Cliente cadastrado com sucesso" : "Ops, algo de errado aconteceu, tente novamente mais tarde";				
+				return customerRepository.save(customer) != null ? new ResponseEntity<>("Cliente cadastrado com sucesso", HttpStatus.OK) : new ResponseEntity<>("Ops, algo de errado aconteceu, tente novamente mais tarde", HttpStatus.BAD_GATEWAY);				
 			} else {
-				return "CPF já cadastrado";
+				return new ResponseEntity<>("CPF já cadastrado", HttpStatus.BAD_REQUEST);
 			}
 		} else {
-			return "CPF inválido";
+			return new ResponseEntity<>("CPF inválido", HttpStatus.BAD_REQUEST);
 		}
 	}
 	
-	public String createCustomerV2(CustomerModel customer) {
+	public ResponseEntity<?> createCustomerV2(CustomerModel customer) {
 		if (customer.getAddress() == null || customer.getAddress() == "") {
-			return "Endereço é um tempo obrigatório";
+			return new ResponseEntity<>("Endereço é um tempo obrigatório", HttpStatus.BAD_REQUEST);
 		}
 		return createCustomerV1(customer);
 	}
 	
-	public String updateCustomer(CustomerModel customer) {
+	public ResponseEntity<?> updateCustomer(CustomerModel customer) {
 		if (customer.getCpf() == null || customer.getCpf() == "") {
-			return "CPF é um campo obrigatório";
+			return new ResponseEntity<>("CPF é um campo obrigatório", HttpStatus.BAD_REQUEST);
 		}
 		
 		String customerCpf = customer.getCpf();
@@ -94,12 +96,13 @@ public class CustomerServices {
 			if (registeredCustomer) {
 				Date date = new Date(System.currentTimeMillis()); 
 				customer.setUpdatedDate(date);
-				return customerRepository.save(customer) != null ? "Dados do cliente atualizados com sucesso" : "Ops, algo de errado aconteceu, tente novamente mais tarde";				
+				return customerRepository.save(customer) != null ? new ResponseEntity<>("Dados do cliente atualizados com sucesso", HttpStatus.OK) : new ResponseEntity<>("Ops, algo de errado aconteceu, tente novamente mais tarde", HttpStatus.BAD_GATEWAY);				
 			} else {
-				return "CPF informado ainda não possui cadastro";
+				return new ResponseEntity<>("CPF informado ainda não possui cadastro", HttpStatus.BAD_REQUEST);
+
 			}
 		} else {
-			return "CPF inválido";
+			return new ResponseEntity<>("CPF inválido", HttpStatus.BAD_REQUEST);
 		}
 	}
 	

@@ -3,8 +3,9 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="index.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 	<title>CustomerApplication</title>
 </head>
 <body>
@@ -119,6 +120,46 @@
 						<input type="text" class="cpf" required autocomplete="off" />
 					</div>
 					<button onclick="submitGetForm()" class="button button-block">Consultar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="alertModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>CPF:</p><p id="modalCpf"></p><br>
+					<p>Nome:</p><p id="modalNome"></p><br>
+					<p>Sobrenome:</p><p id="modalSobrenome"></p><br>
+					<p>Email:</p><p id="modalEmail"></p><br>
+					<p>Endereço:</p><p id="modalEndereco"></p><br>
+					<p>Sexo:</p><p id="modalSexo"></p><br>
+					<p>Data de Aniversário:</p><p id="modalAniversario"></p><br>
+					<p>Naturalidade:</p><p id="modalNatural"></p><br>
+					<p>Nacionalidade:</p><p id="modalNacional"></p><br>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="infoModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+				
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
