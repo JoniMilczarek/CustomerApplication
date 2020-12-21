@@ -27,6 +27,24 @@ public class CustomerModel implements Serializable{
 	private Date dateOfBirth;
 	private Date createdDate;
 	private Date updatedDate;
+	
+	public CustomerModel(String cpf, String firstName, String lastName, String sex, String email, String nationality, String naturalness, String address, Date dateOfBirth, Date createdDate, Date updatedDate) {
+		this.cpf = cpf;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.sex = sex;
+		this.email = email;
+		this.nationality = nationality;
+		this.naturalness = naturalness;
+		this.address = address;
+		this.dateOfBirth = dateOfBirth;
+		this.createdDate = createdDate;
+		this.updatedDate = updatedDate;
+	}
+		
+	public CustomerModel() {
+	
+	}
 
 	public String getFirstName() {
 		return firstName;
