@@ -79,7 +79,7 @@ public class CustomerServices {
 	
 	public ResponseEntity<?> createCustomerV2(CustomerModel customer) {
 		if (customer.getAddress() == null || customer.getAddress() == "") {
-			return new ResponseEntity<>("Endereço é um tempo obrigatório", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Endereço é um campo obrigatório", HttpStatus.BAD_REQUEST);
 		}
 		return createCustomerV1(customer);
 	}
@@ -87,6 +87,12 @@ public class CustomerServices {
 	public ResponseEntity<?> updateCustomer(CustomerModel customer) {
 		if (customer.getCpf() == null || customer.getCpf() == "") {
 			return new ResponseEntity<>("CPF é um campo obrigatório", HttpStatus.BAD_REQUEST);
+		}
+		
+		if (customer.getEmail() != null && customer.getEmail() != "") {
+			if (!validateEmail(customer.getEmail())) {
+				return new ResponseEntity<>("Email inválido", HttpStatus.BAD_REQUEST);
+			}
 		}
 		
 		String customerCpf = customer.getCpf();
