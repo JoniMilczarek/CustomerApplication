@@ -1,3 +1,9 @@
+
+var login = {
+	"user": "",
+	"password": ""
+}
+
 var customer = {
 	firstName: "",
 	lastName: "",
@@ -55,10 +61,19 @@ $('.tab a').on('click', function(e) {
 
 
 var submitGetForm = function() {
+	if(!validateLogin()) {
+		return;
+	}
+
+	if ($("#get .cpf").val() == "") {
+		$("#infoModal .modal-body").html("CPF eh um campo obrigatorio");
+		$("#infoModal").modal();
+	}
+	
 	$.ajax({
 		url: "http://localhost:8080/api/v1/customers/" + $("#get .cpf").val(),
 		type: "GET",
-		headers: { "Authorization": "Basic " + btoa("jonatan" + ":" + "Teste123") }
+		headers: { "Authorization": "Basic " + btoa(login.user + ":" + login.password) }
 	}).done(function(response) {
 		if(response != undefined && response != "") {
 			resolveResponse(response);	
@@ -72,6 +87,9 @@ var submitGetForm = function() {
 }
 
 var submitCreateForm = function() {
+	if(!validateLogin()) {
+		return;
+	}
 	let post_url = "http://localhost:8080/api/v1/customers";
 	customer.firstName = $("#firstName").val();
 	customer.lastName = $("#lastName").val();
@@ -89,7 +107,7 @@ var submitCreateForm = function() {
 		dataType: 'json',
 		context: "json",
 	    contentType: 'application/json',
-		headers: { "Authorization": "Basic " + btoa("jonatan" + ":" + "Teste123") }	    
+		headers: { "Authorization": "Basic " + btoa(login.user + ":" + login.password) }	    
 	}).done(function(response){
 		$("#infoModal .modal-body").html(response);
 		$("#infoModal").modal();		
@@ -102,6 +120,9 @@ var submitCreateForm = function() {
 
 
 var submitUpdateForm = function() {
+	if(!validateLogin()) {
+		return;
+	}	
 	let post_url = "http://localhost:8080/api/v1/customers";
 	customer.firstName = $("#firstNameUpdate").val();
 	customer.lastName = $("#lastNameUpdate").val();
@@ -114,13 +135,13 @@ var submitUpdateForm = function() {
 	
 	console.log("customer", customer);
 	$.ajax({
-		let : post_url,
+		url : post_url,
 		type: "PUT",
 		data : JSON.stringify(customer),
 		dataType: 'json',
 		context: "json",
 	    contentType: 'application/json',
-		headers: { "Authorization": "Basic " + btoa("jonatan" + ":" + "Teste123") }	    
+		headers: { "Authorization": "Basic " + btoa(login.user + ":" + login.password) }	    
 	}).done(function(response){ 
 		$("#infoModal .modal-body").html(response);
 		$("#infoModal").modal();	
@@ -131,6 +152,9 @@ var submitUpdateForm = function() {
 }
 
 var submitDeleteForm = function() {
+	if(!validateLogin()) {
+		return;
+	}
 	let deleteForm = {
 		cpf: ""
 	}
@@ -174,4 +198,21 @@ var clearModal = function() {
 	$("#modalAniversario").html();
 	$("#modalNatural").html();
 	$("#modalNacional").html();
+}
+
+var validateLogin = function() {
+	if (login.user != "jonatan" || login.password != "Teste123") {
+		$("#loginModal").modal();
+		return false;
+	} else {
+		return true;
+	}
+}
+
+var submitLogin = function() {
+	login.user = $(".loginUser").val();
+	login.password = $(".loginPassword").val();
+	console.log("login.user", login.user);
+	console.log("login.password", login.password);
+	$("#loginModal").modal("hide");
 }
